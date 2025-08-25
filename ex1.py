@@ -1,0 +1,34 @@
+from http.server import HTTPServer, BaseHTTPRequestHandler
+
+content = '''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+            <table align="center" border="5" bgcolor="rgb(0,0,0)"cellpadding="30">
+        <caption>list of Protcols in TCP/IP Practical_Suite.</caption>
+        <tr><th>S.No.</th><th>Name of the layer</th><th>Name of the Protocol</th></tr>
+        <tr><td>1</td><td >Application Layer</td><td>HTTP,FTP,DNS,Telnet& SHH</td></tr>
+        <tr><td>2</td><td >Transport Layer</td><td>TCP/UDP</td></tr>
+        <tr><td>3</td><td >Network Layer</td><td>IPV4/IPV6</td></tr>
+        <tr><td>4</td><td >Link Layer</td><td>Ethernet</td></tr>
+    </table>
+</body>
+</html>
+'''
+class MyServer(BaseHTTPRequestHandler):
+    def do_GET(self):
+        print("Get request received...")
+        self.send_response(200) 
+        self.send_header("content-type", "text/html")       
+        self.end_headers()
+        self.wfile.write(content.encode())
+
+print("This is my webserver running at http://localhost:8000/") 
+server_address =('',8000)
+httpd = HTTPServer(server_address,MyServer)
+httpd.serve_forever()
